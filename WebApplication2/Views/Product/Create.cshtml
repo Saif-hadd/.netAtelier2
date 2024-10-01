@@ -1,0 +1,67 @@
+﻿@model WebApplication2.ViewModels.CreateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @* To support file upload set the form element enctype="multipart/form-data" *@
+        <form enctype="multipart/form-data" asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Désignation" class="control-label"></label>
+                <input asp-for="Désignation" class="form-control" />
+                <span asp-validation-for="Désignation" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Prix" class="control-label"></label>
+                <input asp-for="Prix" class="form-control" />
+                <span asp-validation-for="Prix" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Quantite" class="control-label"></label>
+                <input asp-for="Quantite" class="form-control" />
+                <span asp-validation-for="Quantite" class="text-danger"></span>
+            </div>
+
+            @* File upload input *@
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <div class="custom-file">
+                    <input asp-for="ImagePath" class="form-control custom-file-input" />
+                    <label class="custom-file-label" for="ImagePath">Choose File...</label>
+                </div>
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    @* This script is required to display the selected file in the file upload element *@
+        <script>
+            $(document).ready(function () {
+                $('.custom-file-input').on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).next('.custom-file-label').html(fileName);
+                });
+            });
+        </script>
+}
